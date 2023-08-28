@@ -1,0 +1,378 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <title>Thai - Consonants - Alphabet Song - XL714</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Language" content="en,th" />
+<style>
+body{
+    text-align:center;
+    margin: 0;
+}
+#content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 900px;
+}
+#video-n-controls{
+    width:35%;
+    padding:0 25px 0 35px;
+    /*border: 1px solid green;*/
+    text-align: center;
+    float:left;
+    margin:20px 0px 0px 0px;
+}
+#video{
+    width:100%;
+    margin:0;
+}
+#basic-controls button{
+    width:21%;
+    height:2em;
+    font-size:1.5em;
+    padding:2px 6px 2px 6px;
+    margin:0px 5px 10px 5px;
+    display:inline-block;
+}
+#basic-controls button#loop-button, #basic-controls button#rate-button{
+    width:21%;
+    font-size:1.5em;
+    padding:2px 2px 2px 2px;
+    margin:0px 3px 10px 3px;
+    display:inline-block;
+}
+#more{
+    float:left;
+    width:55%;
+    margin-top: 25px;
+}
+.more-item{
+}
+#more-phon{
+    margin:15px 0 0 0;
+    font-size:1.4em;
+    color:Grey;
+}
+#more-thai{
+    position:relative;
+    margin:0;
+    font-size:3.3em;
+}
+#more-eng{
+    position:relative;
+    font-size:1.2em;
+    color:Grey;
+}
+#alphabet-container{
+    margin:5px;
+    text-align: center;
+}
+.letter, .letter-active, .letter-disabled{
+    width:1.7em;
+    margin:6px;
+    font-size:3.4em;
+}
+.letter{
+    background-color: auto;
+}
+.letter-active, .button-active{
+    background-color: lightblue;
+}
+.letter-disabled{
+    background-color: gray;
+}
+.break{
+    display: block;
+    height:1px;
+    overflow: hidden;
+    clear:both;
+}
+</style>
+<script type="text/javascript">
+// http://stackoverflow.com/questions/150033/regular-expression-to-match-non-english-characters
+var letters = [
+    [-1, '', '่', '', ''],
+    [2.6, 'ก', 'กอ เอ๋ย กอ ไก่', 'gaaw<sup>M</sup> eeuy<sup>R</sup> gaaw<sup>M</sup> gai<sup>L</sup>', 'G is for /gai<sup>L</sup>/ <b>chicken</b>'],
+    [4.5, 'ข', 'ข ไข่ ใน เล้า', 'khaaw<sup>R</sup> khai<sup>L</sup> nai<sup>M</sup> laao<sup>H</sup>', 'Kh is for /khai<sup>L</sup>/ <b>the eggs</b> in the coop'],
+    [7.2, 'ฃ', 'ฃ ขวด ของ เรา', 'khaaw<sup>R</sup> khuaat<sup>L</sup> khaawng<sup>R</sup> rao<sup>M</sup>', 'Kh is for /khuaat<sup>L</sup>/ <b>the bottle</b> that is ours'],
+    [9.2, 'ค', 'ค ควาย เข้า นา', 'khaaw<sup>M</sup> khwaai<sup>M</sup> khao<sup>F</sup> naa<sup>M</sup>', 'Kh is for /khwaai<sup>M</sup>/ <b>the water buffalo</b> who enters the rice paddy'],
+    [11.1, 'ฅ', 'ฅ ฅน ขึงขัง', 'khaaw<sup>M</sup> khohn<sup>M</sup> kheung<sup>R</sup> khang<sup>R</sup>', 'Kh is for the serious /khohn<sup>M</sup>/ <b>the person</b>'],
+    [13.4, 'ฆ', 'ฆ ระฆัง ข้าง ฝา', 'khaaw<sup>M</sup> ra<sup>H</sup> khang<sup>M</sup> khaang<sup>F</sup> faa<sup>R</sup>', 'Kh is for /ra<sup>H</sup> khang<sup>M</sup>/ <b>the bell</b> beside the wall'],
+    [16, 'ง', 'งอ งูใจกล้า', 'ngaaw<sup>M</sup> nguu<sup>M</sup> jai<sup>M</sup> glaa<sup>F</sup>', 'A brave <b>snake</b>'],
+    [18.1, 'จ', 'จ จาน ใช้ ดี', 'jaaw<sup>M</sup> jaan<sup>M</sup> chai<sup>H</sup> dee<sup>M</sup>', 'J is for /jaan<sup>M</sup>/ <b>a plate</b>, so useful'],
+    [20, 'ฉ', 'ฉ ฉิ่ง ตี ดัง', 'chaaw<sup>R</sup> ching<sup>L</sup> dtee<sup>M</sup> dang<sup>M</sup>', 'Ch is for /ching<sup>L</sup>/ <b>finger cymbals</b>, struck so loudly'],
+    [22.3, 'ช', 'ช ช้าง วิ่ง หนี', 'chaaw<sup>M</sup> chaang<sup>H</sup> wing<sup>F</sup> nee<sup>R</sup>', 'Ch is for /chaang<sup>H</sup>/ <b>the elephant</b> who runs away'],
+    [25, 'ซ', 'ซ โซ่ ล่าม ที', 'saaw<sup>M</sup> so:h<sup>F</sup> laam<sup>F</sup> thee<sup>M</sup></sup>', 'S is for /so:h<sup>F</sup>/ <b>the chain</b>, to tie him up'],
+    [27, 'ฌ', 'ฌ กะ เฌอ คู่ กัน', 'chaaw<sup>M</sup> ga<sup>L</sup> chuuhr<sup>M</sup> khuu<sup>F</sup> gan</sup>', 'Ch is for the pair of /chuuhr<sup>M</sup>/ <b>bushes</b>'],
+    [29.2, 'ญ', 'ญ หญิง โส ภา', 'yaaw<sup>M</sup> ying<sup>R</sup> so:h<sup>R</sup> phaa<sup>M</sup></sup>', 'Y is for the beautiful /ying<sup>R</sup>/ <b>girl</b>'],
+    [31.2, 'ฎ', 'ฎ ชะฎา สวม พลัน', 'daaw<sup>M</sup> cha<sup>H</sup> daa<sup>M</sup> suaam<sup>R</sup> phlan</sup>', 'D is for /cha<sup>H</sup> daa<sup>M</sup>/ <b>the dance hat</b>, she hastily dons'],
+    [33, 'ฏ', 'ฏ ปะ ฏัก หุน หัน', 'dtaaw<sup>M</sup> bpa<sup>L</sup> dtak<sup>L</sup> hoon<sup>R</sup> han</sup>', 'Dt is for /bpa<sup>L</sup> dtak<sup>L</sup>/ <b>harpoon</b>, hasty and rash'],
+    [35, 'ฐ', 'ฐ ฐาน เข้า มา รอง', 'thaaw<sup>R</sup> thaan<sup>R</sup> khao<sup>F</sup> maa<sup>M</sup> raawng</sup>', 'Th is for /thaan<sup>R</sup>/ <b>the pedestal</b>, giving support'],
+    [39, 'ฑ', 'ฑ มณ โฑ หน้า ขาว', 'thaaw<sup>M</sup> mohn<sup>M</sup> tho:h<sup>M</sup> naa<sup>F</sup> khaao</sup>', 'Th is for /mohn<sup>M</sup> tho:h<sup>M</sup>/ (the giant\'s wife), her face ashen'],
+    [42, 'ฒ', 'ฒ ผู้ เฒ่า เดิน ย่อง', 'thaaw<sup>M</sup> phuu<sup>F</sup> thao<sup>F</sup> deern<sup>M</sup> yawng</sup>', 'Th is for /phuu<sup>F</sup> thao<sup>F</sup>/ <b>the old man</b>, who walks so feebly'],
+    [44, 'ณ', 'ณ เณร ไม่ มอง', 'naaw<sup>M</sup> naehn<sup>M</sup> mai<sup>F</sup> maawng<sup>M</sup></sup>', 'N is for /naehn<sup>M</sup>/ <b>the young monk</b>, who may not stare'],
+    [47, 'ด', 'ด เด็ก ต้อง นิมนต์', 'daaw<sup>M</sup> dek<sup>L</sup> dtawng<sup>F</sup> ni<sup>H</sup> mohn</sup>', 'D is for /dek<sup>L</sup>/ <b>the children</b>, who invite him in'],
+    [49, 'ต', 'ต เต่า หลัง ตุง', 'dtaaw<sup>M</sup> dtao<sup>L</sup> lang<sup>R</sup> dtoong<sup>M</sup></sup>', 'Dt is for /dtao<sup>L</sup>/ <b>turtle</b>, with his bulging back'],
+    [51, 'ถ', 'ถ ถุง แบก ขน', 'thaaw<sup>R</sup> thoong<sup>R</sup> baaek<sup>L</sup> khohn<sup>R</sup></sup>', 'Th is for /thoong<sup>R</sup>/ <b>bag</b>, for carrying things'],
+    [53, 'ท', 'ท หทาร อด ทน', 'thaaw<sup>M</sup> tha<sup>H</sup> haan<sup>R</sup> oht<sup>L</sup> thohn</sup>', 'Th is for /tha<sup>H</sup> haan<sup>R</sup>/ <b>the soldier</b>, so enduring'],
+    [55, 'ธ', 'ธ ธง คน นิยม', 'thaaw<sup>M</sup> thohng<sup>M</sup> khohn<sup>M</sup> ni<sup>H</sup> yohm</sup>', 'Th is for our favorite /thohng<sup>M</sup>/ <b>flag</b>'],
+    [58, 'น', 'น หนู ขวัก ไขว่', 'naaw<sup>M</sup> nuu<sup>R</sup> khwak<sup>L</sup> khwai<sup>L</sup></sup>', 'N is for /nuu<sup>R</sup>/ <b>the mice</b>, who run about helter-skelter'],
+    [60, 'บ', 'บ ใบ ไม ้ทับ ถม', 'baaw<sup>M</sup> bai<sup>M</sup> maai<sup>H</sup> thap<sup>H</sup> thohm</sup>', 'B is for /bai<sup>M</sup> maai<sup>H</sup>/ <b>the leaves</b>, piling up'],
+    [62, 'ป', 'ป ปลา ตา กลม', 'bpaaw<sup>M</sup> bplaa<sup>M</sup> dtaa<sup>M</sup> glohm<sup>M</sup></sup>', 'Bp is for the beady-eyed /bplaa<sup>M</sup>/ <b>fish</b>'],
+    [65, 'ผ', 'ผ ผึ้ง ทำ รัง', 'phaaw<sup>R</sup> pheung<sup>F</sup> tham<sup>M</sup> rang<sup>M</sup></sup>', 'Ph is for /pheung<sup>F</sup>/ <b>bees</b>, building a hive'],
+    [67, 'ฝ', 'ฝ ฝา ทน ทาน', 'faaw<sup>R</sup> faa<sup>R</sup> thohn<sup>M</sup> thaan<sup>M</sup></sup>', 'F is for /faa<sup>R</sup>/ <b>lid</b>, very durable'],
+    [69, 'พ', 'พ พาน วาง ตั้ง', 'phaaw<sup>M</sup> phaan<sup>M</sup> waang<sup>M</sup> dtang<sup>F</sup></sup>', 'Ph is for /phaan<sup>M</sup>/ <b>the tray</b>, all laid out'],
+    [71, 'ฟ', 'ฟ ฟัน สะอาด จัง', 'faaw<sup>M</sup> fan<sup>M</sup> sa<sup>L</sup> aat<sup>L</sup> jang</sup>', 'F is for /fan<sup>M</sup>/ <b>teeth</b>, so very clean'],
+    [73, 'ภ', 'ภ สำเภา กาง ใบ', 'phaaw<sup>M</sup> sam<sup>R</sup> phao<sup>M</sup> gaang<sup>M</sup> bai</sup>', 'Ph is for /sam<sup>R</sup> phao<sup>M</sup>/ (the <sup>C</sup>hinese junk), unfurling its sails'],
+    [75, 'ม', 'ม ม้า คึก คัก', 'maaw<sup>M</sup> maa<sup>H</sup> kheuk<sup>H</sup> khak<sup>H</sup></sup>', 'M is for the unruly /maa<sup>H</sup>/ <b>horse</b>'],
+    [78, 'ย', 'ย ยัก ษ์เขี้ยว ใหญ่', 'yaaw<sup>M</sup> yak<sup>H</sup> khiaao<sup>F</sup> yai<sup>L</sup></sup>', 'Y is for /yak<sup>H</sup>/ <b>the giant</b> with the big fangs'],
+    [80, 'ร', 'ร เรือ พาย ไป', 'raaw<sup>M</sup> reuua<sup>M</sup> phaai<sup>M</sup> bpai<sup>M</sup></sup>', 'R is for /reuua<sup>M</sup>/ <b>the boat</b> that paddles by'],
+    [82.5, 'ล', 'ล ลิง ไต่ ราว', 'laaw<sup>M</sup> ling<sup>M</sup> dtai<sup>L</sup> raao<sup>M</sup></sup>', 'L is for /ling<sup>M</sup>/ <b>the monkey</b> climbing on the handrail'],
+    [84.8, 'ว', 'ว แหวน ลง ยา', 'waaw<sup>M</sup> waaen<sup>R</sup> lohng<sup>M</sup> yaa<sup>M</sup></sup>', 'W is for /waaen<sup>R</sup>/ <b>a ring</b>, decorated with enamel'],
+    [86.5, 'ศ', 'ศ ศาลา เงียบ เหงา', 'saaw<sup>R</sup> saa<sup>R</sup> laa<sup>M</sup> ngiiap<sup>F</sup> ngao</sup>', 'S is for /saa<sup>R</sup> laa<sup>M</sup>/ <b>the pavilion</b>, so peaceful and lonely'],
+    [88.9, 'ษ', 'ษ ฤา ษี หนวด ยาว', 'saaw<sup>R</sup> reuu<sup>M</sup> see<sup>R</sup> nuaat<sup>L</sup> yaao</sup>', 'S is for /reuu<sup>M</sup> see<sup>R</sup>/ <b>the hermit</b>, with his long beard'],
+    [91.5, 'ส', 'ส เเสือ ดาว คะ นอง', 'saaw<sup>R</sup> seuua<sup>R</sup> daao<sup>M</sup> kha<sup>H</sup> naawng</sup>', 'S is for the ferocious spotted /seuua<sup>R</sup>/ <b>tiger</b>, the leopard'],
+    [93.5, 'ห', 'ห หีบ ใส่ ผ้า', 'haaw<sup>R</sup> heep<sup>L</sup> sai<sup>L</sup> phaa<sup>F</sup></sup>', 'H is for /heep<sup>L</sup>/ <b>a box</b> filled with clothes'],
+    [95.5, 'ฬ', 'ฬ จุฬา ท่า ผยอง', 'laaw<sup>M</sup> joo<sup>L</sup> laa<sup>M</sup> thaa<sup>F</sup> pha</sup> yaawng<sup>R</sup>', 'L is for the swaggering /joo<sup>L</sup> laa<sup>M</sup>/ <b>boy kite</b>'],
+    [97.8, 'อ', 'อ อ่าง เนือง นอง', 'aaw<sup>M</sup> aang<sup>L</sup> neuuang<sup>M</sup> naawng<sup>M</sup></sup>', '(Aaw) is for overflowing /aang<sup>L</sup>/ <b>bowls</b>'],
+    [99.8, 'ฮ', 'ฮ นกฮูก ตา โต', 'haaw<sup>M</sup> nohk<sup>H</sup> huuk<sup>F</sup> dtaa<sup>M</sup> dto:h</sup>', 'H is for /nohk<sup>H</sup> huuk<sup>F</sup>/ <b>the owl</b> with huge eyes'],
+    [200, 'End', '', '', '']
+];
+
+</script>
+</head>
+<body>
+    <div id="content">
+
+        <div id="video-n-controls">
+
+            <video id="video" preload="auto">
+                 <source src="thai-alphabet-song.mp4" type="video/mp4" />
+                 HTML5 Video is required for this example.
+                 <a href="thai-alphabet-song.mp4">Download the video</a> file.
+            </video>
+
+            <div id="basic-controls">
+                <button class="button" id="restart" onclick="restart();" title="Restart">|&lt;</button>
+                <!--button id="rew" onclick="skip(-3)">&lt;&lt;</button-->
+                <button class="button" id="play" onclick="vidplay()" title="Play/Pause">&gt;</button>
+                <!--button id="fastFwd" onclick="skip(3)">&gt;&gt;</button-->
+                <button class="button" id="rate-button" onclick="rate()" title="Rate">R</button>
+                <button class="button" id="loop-button" onclick="loop()" title="Loop">L</button>
+            </div>
+
+        </div>
+
+        <div id="more">
+            <div class="more-item" id="more-phon"></div>
+            <br/>
+            <div class="more-item" id="more-thai"></div>
+            <br/>
+            <div class="more-item" id="more-eng"></div>
+            <pre style="display:none;">
+                current index : <span id="current-index"></span> | current time : <span id="current-time"></span>
+            </pre>
+        </div>
+
+        <div class="break"></div>
+
+        <div id="alphabet-container">
+            <div id="letters-container">
+                <script type="text/javascript">
+                for(j=1;j<(letters.length-1);j++){
+                    document.write('<button id="letter-'+j+'" class="letter" onclick="letterPressed('+j+')">'+letters[j][1]+'</button>');
+                }
+                </script>
+            </div>
+        </div>
+
+    </div>
+<script type="text/javascript">
+
+var video = document.getElementById("video"),
+    buttonPlay = document.getElementById("play"),
+    currentIndexEl = document.getElementById('current-index'),
+    currentTimeEl = document.getElementById('current-time'),
+    moreThaiEl = document.getElementById('more-thai'),
+    morePhonEl = document.getElementById('more-phon'),
+    moreEngEl = document.getElementById('more-eng'),
+    loopButtonEl = document.getElementById('loop-button'),
+    rateButtonEl = document.getElementById('rate-button'),
+    previousTime = 0,
+    i = 0,
+    rates = [0.5, 0.75, 1, 1.5],
+    currentRateIndex = 2,
+    loopLetterIndexStart = 1,
+    loopLetterIndexEnd = letters.length-1
+    loopStates = [
+        {id:'none',                 info:''},
+        {id:'waiting_start_letter', info:'Click on the letter you would like the loop to START'},
+        {id:'waiting_end_letter',   info:'Now click on the letter you would like the loop to END'},
+        {id:'end_loop',             info:''},
+    ]
+    currentLoopStatesIndex = 0;
+
+
+function goToIndex(index){
+    setIndexInfos(index);
+    currentTimeEl.innerHTML = letters[i][0];
+    video.currentTime = letters[i][0];
+}
+
+function setIndexInfos(index){
+    i = index;
+    currentIndexEl.innerHTML = i;
+    moreThaiEl.innerHTML = letters[i][2];
+    morePhonEl.innerHTML = letters[i][3];
+    moreEngEl.innerHTML = letters[i][4];
+    for(j=loopLetterIndexStart;j<=loopLetterIndexEnd;j++){
+        if(letter = document.getElementById('letter-'+j)){
+            if(j==i){
+                document.getElementById('letter-'+j).setAttribute('class', 'letter-active');
+            }else{
+                document.getElementById('letter-'+j).setAttribute('class', 'letter');
+            }
+        }
+
+    }
+}
+
+function loop(){
+    var current = loopStates[currentLoopStatesIndex];
+    switch(current.id) {
+        case 'none':
+            loopButtonEl.setAttribute('class', 'button-active');
+        break;
+        case 'waiting_start_letter':
+        case 'waiting_end_letter':
+        break;
+        case 'end_loop':
+            for(j=1;j<(letters.length-1);j++){
+                if(j!=i){
+                    document.getElementById('letter-'+j).setAttribute('class', 'letter');
+                }
+            }
+            loopButtonEl.setAttribute('class', 'button');
+            loopLetterIndexStart = 1;
+            loopLetterIndexEnd = letters.length-1
+        break;
+    }
+    currentLoopStatesIndex += 1;
+    if(currentLoopStatesIndex > 3){
+        currentLoopStatesIndex = 0;
+    }
+}
+
+function letterPressed(index){
+    var current = loopStates[currentLoopStatesIndex];
+    switch(current.id) {
+        case 'none':
+            goToIndex(index);
+        break;
+        case 'waiting_start_letter':
+            loopLetterIndexStart = index;
+            for(j=1;j<loopLetterIndexStart;j++){
+                document.getElementById('letter-'+j).setAttribute('class', 'letter-disabled');
+            }
+            if(i < loopLetterIndexStart){
+                goToIndex(loopLetterIndexStart);
+            }
+            currentLoopStatesIndex += 1;
+        break;
+        case 'waiting_end_letter':
+            if(index > loopLetterIndexStart){
+                loopLetterIndexEnd = index;
+                for(j=(index+1);j<(letters.length-1);j++){
+                    document.getElementById('letter-'+j).setAttribute('class', 'letter-disabled');
+                }
+                if(i > loopLetterIndexEnd){
+                    goToIndex(loopLetterIndexStart);
+                }
+                currentLoopStatesIndex += 1;
+            }
+        break;
+        case 'end_loop':
+            if(index >= loopLetterIndexStart && index < loopLetterIndexEnd){
+                goToIndex(index);
+            }
+        break;
+    }
+    if(currentLoopStatesIndex > 3){
+        currentLoopStatesIndex = 0;
+    }
+}
+
+function rate(){
+    if(currentRateIndex == 0 ){
+        currentRateIndex = rates.length-1;
+    }else{
+        currentRateIndex -= 1;
+    }
+    video.playbackRate = rates[currentRateIndex];
+    rateButtonEl.textContent = (rates[currentRateIndex] == 1) ? 'R' : 'x'+rates[currentRateIndex];
+}
+
+function vidplay() {
+   if (video.paused) {
+      video.play();
+      buttonPlay.textContent = "||";
+   } else {
+      video.pause();
+      buttonPlay.textContent = ">";
+   }
+}
+
+function restart() {
+    currentLoopStatesIndex = 3;
+    loop();
+    goToIndex(0);
+}
+
+function skip(value) {
+    var newTime = video.currentTime + value;
+    currentTimeEl.innerHTML = newTime;
+    findCurrentIndex(newTime);
+    video.currentTime = newTime;
+}
+
+function findCurrentIndex(time){
+    for(j=0;j<letters.length;j++){
+        if( time > letters[j][0] && time < letters[j+1][0]){
+            setIndexInfos(j);
+            break;
+        }
+    }
+}
+
+setInterval(function(){
+    currentTime = video.currentTime;
+    currentTimeEl.innerHTML = currentTime;
+    if( currentTime > letters[i+1][0] && currentTime < letters[i+2][0]){
+        i = i+1;
+        if(i > loopLetterIndexEnd){
+            i = loopLetterIndexStart;
+            currentTimeEl.innerHTML = letters[i][0];
+            video.currentTime = letters[i][0];
+        }
+        setIndexInfos(i);
+    }
+}, 100);
+
+function videoEnded(e) {
+    buttonPlay.textContent = ">";
+    gotoTime(0);
+}
+video.addEventListener('ended',function(e){
+    buttonPlay.textContent = ">";
+    gotoTime(0);
+},false);
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-4584061-4', 'auto');
+ga('send', 'pageview');
+
+</script>
+</html>
